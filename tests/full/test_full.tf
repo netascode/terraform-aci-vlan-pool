@@ -14,35 +14,68 @@ terraform {
 module "main" {
   source = "../.."
 
-  name        = "ABC"
-  alias       = "ALIAS"
-  description = "DESCR"
+  name       = "VP1"
+  allocation = "dynamic"
+  ranges = [{
+    from       = 2
+    to         = 3
+    allocation = "static"
+    role       = "internal"
+  }]
 }
 
-data "aci_rest" "fvTenant" {
-  dn = "uni/tn-ABC"
+data "aci_rest" "fvnsVlanInstP" {
+  dn = "uni/infra/vlanns-[${module.main.name}]-dynamic"
 
   depends_on = [module.main]
 }
 
-resource "test_assertions" "fvTenant" {
-  component = "fvTenant"
+resource "test_assertions" "fvnsVlanInstP" {
+  component = "fvnsVlanInstP"
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.fvTenant.content.name
-    want        = "ABC"
+    got         = data.aci_rest.fvnsVlanInstP.content.name
+    want        = module.main.name
   }
 
-  equal "nameAlias" {
-    description = "nameAlias"
-    got         = data.aci_rest.fvTenant.content.nameAlias
-    want        = "ALIAS"
+  equal "allocMode" {
+    description = "allocMode"
+    got         = data.aci_rest.fvnsVlanInstP.content.allocMode
+    want        = "dynamic"
+  }
+}
+
+data "aci_rest" "fvnsEncapBlk" {
+  dn = "${data.aci_rest.fvnsVlanInstP.id}/from-[vlan-2]-to-[vlan-3]"
+
+  depends_on = [module.main]
+}
+
+resource "test_assertions" "fvnsEncapBlk" {
+  component = "fvnsEncapBlk"
+
+  equal "from" {
+    description = "from"
+    got         = data.aci_rest.fvnsEncapBlk.content.from
+    want        = "vlan-2"
   }
 
-  equal "descr" {
-    description = "descr"
-    got         = data.aci_rest.fvTenant.content.descr
-    want        = "DESCR"
+  equal "to" {
+    description = "to"
+    got         = data.aci_rest.fvnsEncapBlk.content.to
+    want        = "vlan-3"
+  }
+
+  equal "allocMode" {
+    description = "allocMode"
+    got         = data.aci_rest.fvnsEncapBlk.content.allocMode
+    want        = "static"
+  }
+
+  equal "role" {
+    description = "role"
+    got         = data.aci_rest.fvnsEncapBlk.content.role
+    want        = "internal"
   }
 }
