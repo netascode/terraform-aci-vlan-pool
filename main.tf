@@ -1,4 +1,4 @@
-resource "aci_rest" "fvnsVlanInstP" {
+resource "aci_rest_managed" "fvnsVlanInstP" {
   dn         = "uni/infra/vlanns-[${var.name}]-${var.allocation}"
   class_name = "fvnsVlanInstP"
   content = {
@@ -7,9 +7,9 @@ resource "aci_rest" "fvnsVlanInstP" {
   }
 }
 
-resource "aci_rest" "fvnsEncapBlk" {
+resource "aci_rest_managed" "fvnsEncapBlk" {
   for_each   = { for range in var.ranges : range.from => range }
-  dn         = "${aci_rest.fvnsVlanInstP.dn}/from-[vlan-${each.value.from}]-to-[${each.value.to == null ? "vlan-${each.value.from}" : "vlan-${each.value.to}"}]"
+  dn         = "${aci_rest_managed.fvnsVlanInstP.dn}/from-[vlan-${each.value.from}]-to-[${each.value.to == null ? "vlan-${each.value.from}" : "vlan-${each.value.to}"}]"
   class_name = "fvnsEncapBlk"
   content = {
     from      = "vlan-${each.value.from}"

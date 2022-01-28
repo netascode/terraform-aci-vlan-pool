@@ -13,7 +13,7 @@ Location in GUI:
 ```hcl
 module "aci_vlan_pool" {
   source  = "netascode/vlan-pool/aci"
-  version = ">= 0.0.1"
+  version = ">= 0.1.0"
 
   name       = "VP1"
   allocation = "dynamic"
@@ -24,7 +24,6 @@ module "aci_vlan_pool" {
     role       = "internal"
   }]
 }
-
 ```
 
 ## Requirements
@@ -32,13 +31,13 @@ module "aci_vlan_pool" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_aci"></a> [aci](#requirement\_aci) | >= 0.2.0 |
+| <a name="requirement_aci"></a> [aci](#requirement\_aci) | >= 2.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aci"></a> [aci](#provider\_aci) | >= 0.2.0 |
+| <a name="provider_aci"></a> [aci](#provider\_aci) | >= 2.0.0 |
 
 ## Inputs
 
@@ -59,6 +58,6 @@ module "aci_vlan_pool" {
 
 | Name | Type |
 |------|------|
-| [aci_rest.fvnsEncapBlk](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
-| [aci_rest.fvnsVlanInstP](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest_managed.fvnsEncapBlk](https://registry.terraform.io/providers/CiscoDevNet/aci/latest/docs/resources/rest_managed) | resource |
+| [aci_rest_managed.fvnsVlanInstP](https://registry.terraform.io/providers/CiscoDevNet/aci/latest/docs/resources/rest_managed) | resource |
 <!-- END_TF_DOCS -->
