@@ -24,8 +24,8 @@ variable "ranges" {
   type = list(object({
     from       = number
     to         = optional(number)
-    allocation = optional(string)
-    role       = optional(string)
+    allocation = optional(string, "inherit")
+    role       = optional(string, "external")
   }))
   default = []
 

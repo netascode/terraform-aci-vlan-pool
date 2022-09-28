@@ -14,7 +14,7 @@ resource "aci_rest_managed" "fvnsEncapBlk" {
   content = {
     from      = "vlan-${each.value.from}"
     to        = each.value.to == null ? "vlan-${each.value.from}" : "vlan-${each.value.to}"
-    allocMode = each.value.allocation != null ? each.value.allocation : "inherit"
-    role      = each.value.role != null ? each.value.role : "external"
+    allocMode = each.value.allocation
+    role      = each.value.role
   }
 }
