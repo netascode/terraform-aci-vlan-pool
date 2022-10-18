@@ -16,8 +16,9 @@ terraform {
 module "main" {
   source = "../.."
 
-  name       = "VP1"
-  allocation = "dynamic"
+  name        = "VP1"
+  description = "Vlan Pool 1"
+  allocation  = "dynamic"
   ranges = [{
     from       = 2
     to         = 3
@@ -39,6 +40,12 @@ resource "test_assertions" "fvnsVlanInstP" {
     description = "name"
     got         = data.aci_rest_managed.fvnsVlanInstP.content.name
     want        = module.main.name
+  }
+
+  equal "descr" {
+    description = "descr"
+    got         = data.aci_rest_managed.fvnsVlanInstP.content.descr
+    want        = "Vlan Pool 1"
   }
 
   equal "allocMode" {

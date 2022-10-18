@@ -3,6 +3,7 @@ resource "aci_rest_managed" "fvnsVlanInstP" {
   class_name = "fvnsVlanInstP"
   content = {
     name      = var.name
+    descr     = var.description
     allocMode = var.allocation
   }
 }
