@@ -20,10 +20,11 @@ module "main" {
   description = "Vlan Pool 1"
   allocation  = "dynamic"
   ranges = [{
-    from       = 2
-    to         = 3
-    allocation = "static"
-    role       = "internal"
+    description = "Range 1"
+    from        = 2
+    to          = 3
+    allocation  = "static"
+    role        = "internal"
   }]
 }
 
@@ -63,6 +64,12 @@ data "aci_rest_managed" "fvnsEncapBlk" {
 
 resource "test_assertions" "fvnsEncapBlk" {
   component = "fvnsEncapBlk"
+
+  equal "descr" {
+    description = "descr"
+    got         = data.aci_rest_managed.fvnsEncapBlk.content.descr
+    want        = "Range 1"
+  }
 
   equal "from" {
     description = "from"

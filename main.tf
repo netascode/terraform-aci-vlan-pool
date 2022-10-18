@@ -13,6 +13,7 @@ resource "aci_rest_managed" "fvnsEncapBlk" {
   dn         = "${aci_rest_managed.fvnsVlanInstP.dn}/from-[vlan-${each.value.from}]-to-[${each.value.to == null ? "vlan-${each.value.from}" : "vlan-${each.value.to}"}]"
   class_name = "fvnsEncapBlk"
   content = {
+    descr     = each.value.description
     from      = "vlan-${each.value.from}"
     to        = each.value.to == null ? "vlan-${each.value.from}" : "vlan-${each.value.to}"
     allocMode = each.value.allocation

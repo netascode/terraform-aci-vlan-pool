@@ -13,16 +13,17 @@ Location in GUI:
 ```hcl
 module "aci_vlan_pool" {
   source  = "netascode/vlan-pool/aci"
-  version = ">= 0.2.1"
+  version = ">= 0.2.2"
 
   name        = "VP1"
   description = "Vlan Pool 1"
   allocation  = "dynamic"
   ranges = [{
-    from       = 2
-    to         = 3
-    allocation = "static"
-    role       = "internal"
+    description = "Range 1"
+    from        = 2
+    to          = 3
+    allocation  = "static"
+    role        = "internal"
   }]
 }
 ```
@@ -47,7 +48,7 @@ module "aci_vlan_pool" {
 | <a name="input_name"></a> [name](#input\_name) | Vlan pool name. | `string` | n/a | yes |
 | <a name="input_description"></a> [description](#input\_description) | Description. | `string` | `""` | no |
 | <a name="input_allocation"></a> [allocation](#input\_allocation) | Allocation mode. Choices: `static`, `dynamic`. | `string` | `"static"` | no |
-| <a name="input_ranges"></a> [ranges](#input\_ranges) | List of ranges. Allowed values `from`: 1-4096. Allowed values `to`: 1-4096. Default value `to`: <from>. Choices `allocation`: `static`, `dynamic`, `inherit`. Default value `allocation`: `inherit`. Choices `role`: `internal`, `external`. Default value `role`: `external`. | <pre>list(object({<br>    from       = number<br>    to         = optional(number)<br>    allocation = optional(string, "inherit")<br>    role       = optional(string, "external")<br>  }))</pre> | `[]` | no |
+| <a name="input_ranges"></a> [ranges](#input\_ranges) | List of ranges. Allowed values `from`: 1-4096. Allowed values `to`: 1-4096. Default value `to`: <from>. Choices `allocation`: `static`, `dynamic`, `inherit`. Default value `allocation`: `inherit`. Choices `role`: `internal`, `external`. Default value `role`: `external`. | <pre>list(object({<br>    description = optional(string, "")<br>    from        = number<br>    to          = optional(number)<br>    allocation  = optional(string, "inherit")<br>    role        = optional(string, "external")<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 

@@ -1,3 +1,7 @@
+## 0.2.2 (unreleased)
+
+- Add description attribute to ranges
+
 ## 0.2.1
 
 - Add description attribute

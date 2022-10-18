@@ -33,12 +33,20 @@ variable "allocation" {
 variable "ranges" {
   description = "List of ranges. Allowed values `from`: 1-4096. Allowed values `to`: 1-4096. Default value `to`: <from>. Choices `allocation`: `static`, `dynamic`, `inherit`. Default value `allocation`: `inherit`. Choices `role`: `internal`, `external`. Default value `role`: `external`."
   type = list(object({
-    from       = number
-    to         = optional(number)
-    allocation = optional(string, "inherit")
-    role       = optional(string, "external")
+    description = optional(string, "")
+    from        = number
+    to          = optional(number)
+    allocation  = optional(string, "inherit")
+    role        = optional(string, "external")
   }))
   default = []
+
+  validation {
+    condition = alltrue([
+      for r in var.ranges : can(regex("^[a-zA-Z0-9\\!#$%()*,-./:;@ _{|}~?&+]{0,128}$", r.description))
+    ])
+    error_message = "Allowed characters `description`: `a`-`z`, `A`-`Z`, `0`-`9`, `\\`, `!`, `#`, `$`, `%`, `(`, `)`, `*`, `,`, `-`, `.`, `/`, `:`, `;`, `@`, ` `, `_`, `{`, `|`, }`, `~`, `?`, `&`, `+`. Maximum characters: 128."
+  }
 
   validation {
     condition = alltrue([
